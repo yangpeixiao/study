@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>左右滚动</title>
+	<style>
+		body,div，h3{margin:0;padding:0;}
+		.wrap{
+			width:1240px;
+			height:400px;
+			margin:160px auto;
+			border:1px solid #eee;
+			overflow:hidden;
+			position:relative;
+			top:0;left:0;
+		}
+		.headwrap{
+			overflow:hidden;
+		}
+		#scroll{
+			overflow:hidden;
+			position:absolute;
+			left:0;
+		}
+		h3{
+			line-height:60px;
+			font-size:22px;
+			color:#777;
+			float:left;
+		}
+		span{
+			display:block;
+			width:30px;
+			height:20px;
+			border:1px solid #e0e0e0;
+			float:right;
+			color:rgba(176,177,187,0.3);
+			line-height:20px;
+			text-align:center;
+			font-weight:800;
+			margin-top:40px;
+		}
+		span:hover{
+			color:rgba(239,68,68,1);
+		}
+		#right{
+			margin-right:16px;
+			color:rgba(176,177,187,1);
+		}
+		#right:hover{
+			color:rgba(239,68,68,1);
+		}
+		a{
+			display:block;
+			text-decoration:none;
+			float:left;
+			width:240px;
+			background-color:#fafafa;
+			margin-right:10px;
+			padding-top:40px;
+			text-align:center;
+			border-top:2px solid #ffac13;
+		}
+		#second{
+			border-top:2px solid #83c44e;
+		}
+		#third{
+			border-top:2px solid #2196f3;
+		}
+		#fourth{
+			border-top:2px solid #e53935;
+		}
+		#last{
+			border-top:2px solid #00c0a5;
+			margin-right:0;
+		}
+		#scroll-inner{
+			overflow:hidden;
+			
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="headwrap">
+			<h3>小米明星单品</h3>
+			<span id="right">></span>
+			<span id="left"><</span>
+		</div>
+		<div id="scroll">
+			<a href="#" id="first">
+				<img src="images/s-img1.jpg" alt="">
+			</a>
+			<a href="#" id="second">
+				<img src="images/s-img2.jpg" alt="">
+			</a>
+			<a href="#" id="third">
+				<img src="images/s-img1.jpg" alt="">
+			</a>
+			<a href="#" id="fourth">
+				<img src="images/s-img2.jpg" alt="">
+			</a>
+			<a href="#" id="last">
+				<img src="images/s-img1.jpg" alt="">
+			</a>
+
+			<div id="scroll-inner">
+				<a href="#" id="first">
+					<img src="images/s-img3.jpg" alt="">
+				</a>
+				<a href="#" id="second">
+					<img src="images/s-img4.jpg" alt="">
+				</a>
+				<a href="#" id="third">
+					<img src="images/s-img5.jpg" alt="">
+				</a>
+				<a href="#" id="fourth">
+					<img src="images/s-img4.jpg" alt="">
+				</a>
+				<a href="#" id="last">
+					<img src="images/s-img3.jpg" alt="">
+				</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+window.onload = function(){
+	var rBtn = document.getElementById('right');
+	var lBtn = document.getElementById('left');
+	var scrollEl = document.getElementById('scroll');
+
+	//右按钮
+	rBtn.onclick = function(){
+		var timeId = null;
+		//定时器
+		timeId = setInterval(function(){
+			//scroll中的内容想左移动
+			scrollEl.style.left = (scrollEl.offsetLeft-20) + 'px';
+			// 停止在scroll-inner处
+			if(scrollEl.offsetLeft <= -1240){
+				clearInterval(timeId)
+				scrollEl.style.left = '-1240px'; 
+				// 按钮颜色进行变换
+				rBtn.style.color = 'rgba(176,177,187,0.3)';
+				lBtn.style.color = 'rgba(176,177,187,1)';
+			}
+		},1)
+	}
+
+	lBtn.onclick = function(){
+		var timeId = null;
+		timeId = setInterval(function(){
+			scrollEl.style.left =(scrollEl.offsetLeft + 20) + 'px';
+			if(scrollEl.offsetLeft >=0){
+				clearInterval(timeId);
+				scrollEl.style.left = '0px';
+				lBtn.style.color = 'rgba(176,177,187,0.3)';
+				rBtn.style.color = 'rgba(176,177,187,1)';
+			}
+		},1)
+	}
+}
+</script>
+</html>

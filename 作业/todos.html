@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Todos</title>
+	<style>
+	body,div,p,h1,ul,li{margin:0;padding:0;}
+		.wrap{
+			width:560px;
+			margin:0 auto;
+			border:1px solid #ddd;
+			overflow:hidden;
+		}
+		
+		h1{
+			color:#f2a1a1;
+			font-size:60px;
+			font-family:'微软雅黑';
+			text-align:center;
+			padding-top:70px;
+			padding-bottom:50px;
+			
+		}
+		#btn{
+			display:block;
+			width:140px;
+			height:40px;
+			background-color:#f27979;
+			border:0;
+			border-radius:6px;
+			font-size:18px;
+			color:#fff;
+			float:right;
+			margin-top:4px;
+		}
+		#msg{
+			border:0;
+			border-bottom:1px solid #ddd;
+			width:400px;
+			margin-left:10px;
+			line-height:40px;
+			text-indent:1em;
+			color:#8b8b8b;
+			font-size:20px;
+			margin-bottom:20px;
+		}
+		li button{
+			width:60px;
+			height:26px;
+			border:0;
+			background-color:#e14f4f;
+			float:right;
+			margin-top:20px;
+			margin-right:20px;
+			color:#fff;
+			font-size:18px;
+			border-radius:4px;
+		}
+		li{
+			list-style:none;
+			width:550px;
+			height:60px;
+			overflow:hidden;
+			border-top:1px solid #ddd;
+		}
+		li p{
+			width:300px;height:60px;
+			font-size:22px;
+			color:#000;
+			line-height:60px;
+			text-indent:1em;
+			float:left;
+		}
+		#footer{
+			height:42px;
+			border-top:1px solid #ddd;
+			padding-left:10px;
+			display:none;
+		}
+		#footer button{
+			border:0;
+			background-color:#fff;
+			margin-top:10px;
+			color:#777777;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<!-- <div class="headbox"> -->
+			<h1>Todos</h1>
+			<input type="text" id="msg" value="请输入待办事项">
+			<button id="btn">创建</button>
+		<!-- </div>	 -->
+		<ul id="uls">
+
+		</ul>
+		<div id="footer">
+			<button id="all">所有</button>
+			<button id="ing">进行中</button>
+			<button id="finish">已完成</button>
+		</div>
+	</div>
+</body>
+<script>
+window.onload = function(){
+	var btnEl = document.getElementById('btn');
+	var ulsEl = document.getElementById('uls');
+	var msgEl = document.getElementById('msg');
+	var divEl = document.getElementById('footer');
+	var listEl = document.getElementsByTagName('li');
+	var arrp = document.getElementsByTagName('p');
+	var allEl = document.getElementById('all');
+	var ingEl = document.getElementById('ing');
+	var finishEl = document.getElementById('finish');
+	//创建按钮的点击事件
+	btnEl.onclick = function(){
+		divEl.style.display='block';
+		var liEl = document.createElement('li');
+		var drop = document.createElement('button');
+		var pEl = document.createElement('p');
+		var text = document.createTextNode(msg.value);
+		msg.value='请输入待办事项';
+
+		//创建--添加内容到 li 标签中
+		pEl.appendChild(text);
+		liEl.appendChild(pEl);
+		liEl.appendChild(drop);
+		if(listEl.length == 0){
+			ulsEl.appendChild(liEl);
+		}else{
+			ulsEl.insertBefore(liEl,listEl[0]);
+		}
+
+
+		//删除
+		drop.innerHTML='删除';
+		drop.className='drop';
+		drop.onclick = function(){
+			parentLi = this.parentNode;
+			ulsEl.removeChild(parentLi);
+		}
+		//将p标签内容设置为已完成 
+		var arrp = document.getElementsByTagName('p');
+		for(var i = 0; i < arrp.length;i++){
+			arrp[i].onclick = function(){
+				this.style.color='#777';
+				this.style.textDecoration = 'line-through';
+				this.parentNode.className = 'finished';
+				}	
+			}	
+	}
+		//输入框	
+		msgEl.onclick = function(){
+			msg.value = '';
+			msgEl.style.color='#000';
+		}	
+	// 进行中按钮
+	ingEl.onclick = function(){
+		for(var i = 0;i<listEl.length;i++){
+			listEl[i].style.display='block';
+		}
+		var fiEl = document.getElementsByClassName('finished');
+		for(var i = 0;i<fiEl.length;i++){
+			fiEl[i].style.display='none';
+		}
+	}
+	//所有按钮
+	allEl.onclick = function(){
+		for(var i = 0;i<listEl.length;i++){
+			listEl[i].style.display='block';
+		}
+	}
+	// 完成按钮
+	finishEl.onclick = function(){
+		for(var i = 0;i<listEl.length;i++){
+			listEl[i].style.display='none';
+		}
+		var fiEl = document.getElementsByClassName('finished');
+		for(var i = 0;i<fiEl.length;i++){
+
+			fiEl[i].style.display='block';
+		}
+	}
+	
+}
+</script>
+</html>
